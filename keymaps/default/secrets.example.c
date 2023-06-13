@@ -1,0 +1,2 @@
+#define SECRET_STR "SECRET_STR"
+#define POSTFIX_STR "POSTFIX_STR"
