@@ -1,4 +1,33 @@
 #include QMK_KEYBOARD_H
+#include "secrets.c"
+
+enum macrocodes{
+  UPDIR = SAFE_RANGE,
+  SECRET,
+  POSTFIX
+};
+
+// credit: https://getreuer.info/posts/keyboards/macros/index.html
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+  switch (keycode) {
+    case UPDIR:  // Types ../ to go up a directory on the shell.
+      if (record->event.pressed) {
+        SEND_STRING("../");
+      }
+      return false;
+    case SECRET: 
+      if (record->event.pressed) {
+        SEND_STRING(SECRET_STR);
+      }
+      return false;
+    case POSTFIX:
+      if (record->event.pressed) {
+        SEND_STRING(POSTFIX_STR);
+      }
+      return false;
+  }
+  return true;
+}
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -31,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *    `---------------------------------------------------------------------------------------------------------------------------------------------------------------'
  */
     [1] = LAYOUT(
-        KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		QK_BOOT,			
+        SECRET,		    POSTFIX,		UPDIR,		    KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		QK_BOOT,			
         KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		
         KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		
         KC_NO,			KC_NO,			KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_NO,			KC_NO
